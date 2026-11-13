@@ -1,12 +1,21 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { FotosService } from './fotos.service.js';
 import type { Foto } from './entities/foto.entity.js';
 
-@Controller('fotos') // ruta base: /fotos
+@Controller('fotos')
 export class FotosController {
-  constructor(
-    private readonly fotosService: FotosService,
-  ) {}
+  constructor(private readonly fotosService: FotosService) {}
 
   @Get()
   findAll() {
@@ -21,5 +30,19 @@ export class FotosController {
   @Post()
   create(@Body() datos: Omit<Foto, 'id'>) {
     return this.fotosService.create(datos);
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() datos: Partial<Omit<Foto, 'id'>>,
+  ) {
+    return this.fotosService.update(id, datos);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT) 
+  remove(@Param('id', ParseIntPipe) id: number) {
+    this.fotosService.remove(id);
   }
 }

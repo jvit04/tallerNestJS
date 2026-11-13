@@ -1,10 +1,13 @@
 ### 1. Obtener todas las fotos iniciales (200 OK)
 GET http://localhost:3000/api/fotos
 
+### 2. Obtener una foto existente por ID (200 OK)
+GET http://localhost:3000/api/fotos/1
+
 ### 3. Intentar obtener una foto que no existe (404 Not Found)
 GET http://localhost:3000/api/fotos/9
 
-###
+### 3b. Intentar obtener con un ID inválido - ParseIntPipe (400 Bad Request)
 GET http://localhost:3000/api/fotos/abc
 
 ### 4. Crear una nueva foto (201 Created)
@@ -13,7 +16,39 @@ Content-Type: application/json
 
 {
   "titulo": "Cerro",
-  "calificacion": 5.0,
+  "calificacion": 5
 }
 
-###
+### 5. Actualizar parcialmente una foto existente (200 OK)
+PATCH http://localhost:3000/api/fotos/1
+Content-Type: application/json
+
+{
+  "descripcion": "Vista desde el mirador",
+  "calificacion": 5.0
+}
+
+### 6. Intentar actualizar una foto que no existe (404 Not Found)
+PATCH http://localhost:3000/api/fotos/99
+Content-Type: application/json
+
+{
+  "titulo": "No existe"
+}
+
+### 7. Eliminar una foto existente (204 No Content)
+DELETE http://localhost:3000/api/fotos/2
+
+### 8. Intentar eliminar la misma foto otra vez o una inexistente (404 Not Found)
+DELETE http://localhost:3000/api/fotos/2
+
+### 9. Prueba del reto: Crear foto sin título (201 Created — pasa porque aún no hay validación)
+POST http://localhost:3000/api/fotos
+Content-Type: application/json
+
+{
+  "calificacion": 3.5
+}
+
+### 10. Verificar estado final de todas las fotos en memoria (200 OK)
+GET http://localhost:3000/api/fotos
