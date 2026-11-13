@@ -1,0 +1,19 @@
+### 1. Obtener todas las fotos iniciales (200 OK)
+GET http://localhost:3000/api/fotos
+
+### 3. Intentar obtener una foto que no existe (404 Not Found)
+GET http://localhost:3000/api/fotos/9
+
+###
+GET http://localhost:3000/api/fotos/abc
+
+### 4. Crear una nueva foto (201 Created)
+POST http://localhost:3000/api/fotos
+Content-Type: application/json
+
+{
+  "titulo": "Cerro",
+  "calificacion": 5.0,
+}
+
+###
