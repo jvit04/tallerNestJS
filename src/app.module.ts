@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FotosModule } from './fotos/fotos.module.js';
+import { AlbumesModule } from './albumes/albumes.module.js';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { FotosModule } from './fotos/fotos.module.js';
       }),
     }),
     FotosModule,
+    AlbumesModule,
   ],
 })
 export class AppModule {}
