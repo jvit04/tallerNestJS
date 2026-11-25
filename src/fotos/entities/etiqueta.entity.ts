@@ -6,7 +6,7 @@ export class Etiqueta {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({length: 30, unique: true })
+    @Column({type: 'varchar', length: 50, unique: true })
     texto: string;
 
     @ManyToMany(() => Foto, (foto) => foto.etiquetas)
