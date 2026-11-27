@@ -1,22 +1,47 @@
-### 1. Filtrar fotos por calificación y paginar (200 OK)
-GET http://localhost:3000/api/fotos?min=3&max=5&page=1&limit=3
+### 1. Intentar paginar excediendo el límite máximo permitido (400 Bad Request)
+GET http://localhost:3000/api/fotos?limit=999
 
-### 2. Buscar fotos por título con espacio codificado en URL (200 OK)
-GET http://localhost:3000/api/fotos?q=foto%201
+### 2. Crear una foto válida con álbum y etiquetas (201 Created)
+POST http://localhost:3000/api/fotos
+Content-Type: application/json
 
-### 3. Obtener un álbum con sus fotos asociadas (200 OK)
-GET http://localhost:3000/api/albumes/1/fotos
+{
+  "titulo": "Cerro Santa Ana",
+  "calificacion": 4.8,
+  "ruta": "https://picsum.photos/id/1/600/400",
+  "albumId": 2,
+  "etiquetas": ["Ciudad", "faro"]
+}
 
-### 4. Intentar filtrar con un parámetro numérico inválido (400 Bad Request)
-GET http://localhost:3000/api/fotos?min=abc
+### 3. Intentar crear una foto con datos inválidos y propiedades no permitidas (400 Bad Request)
+POST http://localhost:3000/api/fotos
+Content-Type: application/json
 
+{
+  "titulo": "",
+  "calificacion": 9,
+  "ruta": "no-url",
+  "hack": 1
+}
 
-### Reto
-###Filtrar fotos por etiqueta (200 OK)
-GET http://localhost:3000/api/fotos?etiqueta=playa
+### 4. Intentar crear una foto asociada a un álbum inexistente (400 Bad Request)
+POST http://localhost:3000/api/fotos
+Content-Type: application/json
 
-### Ordenar fotos por calificación descendente (200 OK)
-GET http://localhost:3000/api/fotos?orden=desc
+{
+  "titulo": "Cerro Santa Ana",
+  "calificacion": 4.8,
+  "ruta": "https://picsum.photos/id/1/600/400",
+  "albumId": 99
+}
 
-### Combinar etiqueta, orden y verificar que venga el objeto 'album' (200 OK)
-GET http://localhost:3000/api/fotos?etiqueta=ciudad&orden=asc
+### 5. Actualizar parcialmente la calificación de una foto existente (200 OK)
+PATCH http://localhost:3000/api/fotos/21
+Content-Type: application/json
+
+{
+  "calificacion": 2.5
+}
+
+### 6. Eliminar una foto existente (204 No Content)
+DELETE http://localhost:3000/api/fotos/21

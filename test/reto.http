@@ -1,0 +1,37 @@
+### 1. Crear un álbum nuevo (201 Created)
+POST http://localhost:3000/api/albumes
+Content-Type: application/json
+
+{
+  "nombre": "Arquitectura"
+}
+
+### 2. Intentar crear un álbum con nombre duplicado (409 Conflict)
+POST http://localhost:3000/api/albumes
+Content-Type: application/json
+
+{
+  "nombre": "Viajes"
+}
+
+### 3. Validación con mensaje en español: nombre vacío (400 Bad Request)
+POST http://localhost:3000/api/albumes
+Content-Type: application/json
+
+{
+  "nombre": ""
+}
+
+### 4. Actualizar un álbum existente (200 OK)
+PATCH http://localhost:3000/api/albumes/1
+Content-Type: application/json
+
+{
+  "nombre": "Viajes Internacionales"
+}
+
+### 5. Eliminar un álbum existente (204 No Content — sus fotos pasan a tener album: null)
+DELETE http://localhost:3000/api/albumes/1
+
+### 6. Verificar que las fotos que pertenecían al álbum 1 siguen existiendo con album: null (200 OK)
+GET http://localhost:3000/api/fotos
