@@ -3,9 +3,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
+import { Etiqueta } from './etiqueta.entity.js';
+import { Album } from '../../albumes/entities/album.entity.js';
 
 @Entity('fotos')
 export class Foto {
@@ -39,4 +44,21 @@ fotografo: string | null;
 //crea la columna de fecha de actualización
   @UpdateDateColumn()
   actualizadoEn: Date;
+
+
+  // N:1 Muchas fotos pertenecen a un álbum
+  @ManyToOne(() => Album, (album) => album.fotos, {
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
+  album: Album | null;
+
+// N:M Una foto tiene muchas etiquetas y viceversa
+  @ManyToMany(() => Etiqueta, (etiqueta) => etiqueta.fotos)
+  @JoinTable({
+    name:'fotos_etiquetas',
+    joinColumn: { name: 'foto_id'},
+    inverseJoinColumn: {name: 'etiqueta_id'},
+  })
+  etiquetas: Etiqueta[];
 }
