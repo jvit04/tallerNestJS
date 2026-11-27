@@ -1,12 +1,12 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Foto } from "../../fotos/entities/foto.entity.js";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Foto } from '../../fotos/entities/foto.entity.js';
 
 @Entity('albumes')
 export class Album {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ type: 'varchar', length: 100, unique: true })
   nombre: string;
 
   @OneToMany(() => Foto, (foto) => foto.album)
